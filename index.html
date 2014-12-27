@@ -1,22 +1,25 @@
 <div class="box">
   <div class="new_banner">
-    <strong>October 10th, 2014:</strong> Lapis v1.0.5 is released, read more on the <a href="$root/changelog.html">changelog</a>
+    <strong>10-е октября 2014 г.:</strong> выпущен Lapis v1.0.5, см. <a href="$root/changelog.html">changelog</a>
   </div>
 
-  <h3>What is it? <span class="decor">❧</span></h3>
+  <h3>Что такое Lapis? <span class="decor">❧</span></h3>
 $markdown{[[
-Lapis is a framework for building web applications using [MoonScript](http://moonscript.org) or [Lua](http://lua.org) that runs inside of a customized version of [Nginx](http://nginx.org) called [OpenResty](http://openresty.org).
+Lapis - это фреймворк для веб-приложений на языках
+[MoonScript](http://moonscript.org) и [Lua](http://lua.org),
+работающий на [OpenResty](http://openresty.org)
+(специальная версия [Nginx](http://nginx.org)).
 ]]}
 </div>
 
 <div class="lang_headers">
   <h1 class="lang_header lua_header">
     <span class="label">Lua</span>
-    <span class="lang_toggle" data-hash="lang=moonscript">View examples in MoonScript</span>
+    <span class="lang_toggle" data-hash="lang=moonscript">Показать примеры в MoonScript</span>
   </h1>
   <h1 class="lang_header moon_header">
     <span class="label">MoonScript</span>
-    <span class="lang_toggle" data-hash="lang=lua">View examples in Lua</span>
+    <span class="lang_toggle" data-hash="lang=lua">Показать примеры в Lua</span>
   </h1>
 </div>
 
@@ -59,21 +62,27 @@ class extends lapis.Application
 <iframe style="display: none" width="800" height="450" class="video_embed" src="//www.youtube.com/embed/Eo67iTY1Yf8" frameborder="0" allowfullscreen></iframe>
 
 <div class="box">
-  <h3>How does it work? <span class="decor">❧</span></h3>
+  <h3>Как работает Lapis? <span class="decor">❧</span></h3>
 $markdown{[[
-Lua is run directly inside of the Nginx worker, giving you the smallest barrier
-between the webserver and your code. OpenResty executes your Lua/MoonScript
-with LuaJIT, so it's blazing fast. Have a look at [Web Framework
-Benchmarks](http://www.techempower.com/benchmarks/#section=data-r3) just to see
-how OpenResty stacks up against other platforms.
+Код сайта исполняется непосредственно процессом Nginx,
+что приближает код к веб-серверу.
+В OpenResty Lua исполняется при помощи быстрого
+интерпретатора LuaJIT.
+Замеры производительности
+[показали](http://www.techempower.com/benchmarks/#section=data-r3),
+что OpenResty занимает почётное место в списке веб-платформ.
 
-Nginx's event loop is used for all asynchronous actions, including HTTP
-requests and database queries. With the power of Lua coroutines code is written
-synchronously but runs asynchronously, without all that callback spaghetti seen
-in other asynchronous platforms. It's fast, easy to read, and easy to write.
+Цикл обработки событий Nginx используется для всех действий,
+включая внешние HTTP-запросы и запросы к БД.
+Благодаря сопрограммам Lua, асинхронные действия записываются
+в синхронном стиле, без лапша-кода из бесконечных обратных вызовов,
+как происходит в большинстве асинхронных платформ.
+Работает быстрее, читается быстрее, пишется быстрее.
 
-Perform HTTP requests and other asynchronous operations freely without being
-concerned about blocking your application and killing your throughput.
+У вас появилась замечательная возможность свободно выполнять
+асинхронные операции без риска заблокировать всё приложение
+или выстрелить себе в ногу.
+
 ]]}
 
 </div>
@@ -82,12 +91,15 @@ concerned about blocking your application and killing your throughput.
 
 
 <div class="box">
-  <h3>What does it come with? <span class="decor">❧</span></h3>
+  <h3>Что ещё есть в Lapis? <span class="decor">❧</span></h3>
 $markdown{[[
-Lapis includes URL routing, [HTML Templating][1], [CSRF Protection][2] and [Session][3]
-support, [PostgreSQL backed models][4], [schema generation][5] and
-[migrations][6] in addition to a [collection of useful functions][7] needed
-when developing a website.
+
+В Lapis входит обработчик URL, [HTML-шаблоны][1],
+[защита от CSRF][2], [сессии][3], [система моделей
+для работы с БД PostgreSQL][4],
+[генерация таблиц БД][5], [миграции БД][6]
+и другие [полезные функции][7],
+необходимые для разработки веб-сайтов.
 
   [1]: $root/reference/html_generation.html
   [2]: $root/reference/utilities.html#csrf-protection
@@ -109,22 +121,22 @@ $markdown{[[
 local lapis = require "lapis"
 local app = lapis.Application()
 
--- Define a basic pattern that matches /
+-- главная страница ("/")
 app:match("/", function(self)
   local profile_url = self:url_for("profile", {name = "leafo"})
-  -- Use inline HTML helper to quickly write a template
+  -- генерация HTML
   return self:html(function()
-    h2("Welcome!")
-    text("Go to my ")
-    a({href = profile_url}, "profile")
+    h2("Привет!")
+    text("Зайдите на мою ")
+    a({href = profile_url}, "страничку")
   end)
 end)
 
--- Define a named route pattern with a variable called name
+-- страница пользователя: URL с именем пользователя
 app:match("profile", "/:name", function(self)
   return self:html(function()
     div({class = "profile"},
-      "Welcome to the profile of " .. self.params.name)
+      "Добро пожаловать на страничку " .. self.params.name)
   end)
 end)
 
@@ -142,20 +154,20 @@ $markdown{[[
 lapis = require "lapis"
 
 class extends lapis.Application
-  -- Define a basic pattern that matches /
+  -- главная страница ("/")
   "/": =>
     profile_url = @url_for "profile", name: "leafo"
-    -- Use inline HTML helper to quickly write a template
+    -- генерация HTML
     @html ->
-      h2 "Welcome!"
-      text "Go to my "
-      a href: profile_url, "profile"
+      h2 "Привет!"
+      text "Зайдите на мою "
+      a href: profile_url, "страничку"
 
-  -- Define a named route pattern with a variable called name
+  -- страница пользователя: URL с именем пользователя
   [profile: "/:name"]: =>
     @html ->
       div class: "profile", ->
-        text "Welcome to the profile of ", @params.name
+        text "Добро пожаловать на страничку ", @params.name
 ```
 ]]}
 
@@ -166,8 +178,8 @@ class extends lapis.Application
 
 <div class="box">
 $markdown{[[
-Get a powerful abstraction layer over your database tables just by
-sub-classing `Model`:
+Класс `Model` - мощный уровень абстракции от БД.
+От него наследуются модели данных:
 ]]}
 </div>
 
@@ -182,20 +194,20 @@ $markdown{[[
 ```lua
 local Model = require("lapis.db.model").Model
 
--- Create a model, backed by the table `users`
+-- Модель для таблицы `users`
 local Users = Model.extend("users")
 
--- fetch some rows from the table
+-- загрузим несколько записей из БД
 local elderly_users = Users:select("where age > ? limit 5", 10)
 
-local random_user = Users:find(1233) -- find by primary key
+local random_user = Users:find(1233) -- доступ по первичному ключу
 
 local lee = Users:find({
   name = "Lee",
   email = "leemiller@example.com"
 })
 
--- create a new row and edit it
+-- создание и редактирование новой записи
 local user = Users:create({
   name = "Leaf",
   email = "leaf@example.com",
@@ -218,17 +230,17 @@ $markdown{[[
 ```moon
 import Model from require "lapis.db.model"
 
--- Create a model, automatically backed by the table `users`
+-- Модель для таблицы `users`
 class Users extends Model
 
--- fetch some rows from the table
+-- загрузим несколько записей из БД
 elderly_users = Users\select "where age > ? limit 5", 10
 
-random_user = Users\find 1233 -- find by primary key
+random_user = Users\find 1233 -- доступ по первичному ключу
 
 lee = Users\find name: "Lee", email: "leemiller@example.com"
 
--- create a new row and edit it
+-- создание и редактирование новой записи
 user = Users\create {
   name: "Leaf"
   email: "leaf@example.com"
@@ -248,12 +260,12 @@ user\delete!
 
 <div class="box">
 $markdown{[[
-Write your templates either in [etlua](https://github.com/leafo/etlua) or in
-pure Lua/MoonScript.
+Пишите HTML-шаблоны на [etlua](https://github.com/leafo/etlua)
+или на Lua/MoonScript.
 
-The template builder syntax works well in MoonScript and lets your organize
-your templates as classes, allowing you to use inheritance to mix and match
-methods as you see fit.
+MoonScript хорошо подходит для описания шаблонов, которые
+представляются как классы, что позволяет наследоваться
+и смешивать методы.
 ]]}
 </div>
 
@@ -267,12 +279,12 @@ $markdown{[[
 <h1 class="header"><%= "Hello" %></h1>
 <% if current_user then %>
   <div class="user_panel">
-    Welcome back <%= current_user.name %>
+    Привет, <%= current_user.name %>
   </div>
 <% end %>
 
 <div class="body">
-  Welcome to my site
+  Добро пожаловать на сайт
 </div>
 ```
 ]]}
@@ -288,15 +300,15 @@ import Widget from require "lapis.html"
 
 class Index extends Widget
   content: =>
-    h1 class: "header", "Hello"
+    h1 class: "header", "Привет"
 
     @user_panel!
     div class: "body", ->
-      text "Welcome to my site!"
+      text "Добро пожаловать на сайт!"
 
   user_panel: =>
     return unless @current_user
-    div class: "user_panel", "Welcome back " .. @current_user.name
+    div class: "user_panel", "Привет, " .. @current_user.name
 ```
 ]]}
 
@@ -307,9 +319,10 @@ class Index extends Widget
 
 <div class="box">
 $markdown{[[
-Using all the provided tools we can quickly and logically construct high
-performance and low memory web applications. Here's a more complicated example
-complete with forms, CSRF protection, and various database queries.
+Все эти инструменты позволяют нам быстро и чётко строить
+высоконагруженные системы с низким потреблением памяти.
+Ниже вы найдёте сложный пример, включающий формы, защиту от CSRF,
+запросы к БД.
 ]]}
 </div>
 
@@ -333,7 +346,7 @@ app:before_filter(function(self)
 end)
 
 app:get("list_users", "/users", function(self)
-  self.users = Users:select() -- `select` all users
+  self.users = Users:select() -- запрашиваем список всех пользователей
   return { render = true }
 end)
 
@@ -383,9 +396,9 @@ class extends lapis.Application
     @csrf_token = csrf.generate_token @
 
   [list_users: "/users"]: =>
-    users = Users\select! -- `select` all the users
+    users = Users\select! -- запрашиваем список всех пользователей
 
-    -- Render HTML inline for simplicity
+    -- генерация HTML
     @html ->
       ul ->
         for user in *users
@@ -397,7 +410,7 @@ class extends lapis.Application
     return status: 404 unless user
     @html -> h2 user.name
 
-  -- Respond to different HTTP actions to do the right thing
+  -- обработчики различных путей
   [new_user: "/user/new"]: respond_to {
     POST: capture_errors =>
       csrf.assert_token @
@@ -419,37 +432,46 @@ class extends lapis.Application
 </div>
 
 <div class="box">
-  <h3>Where can I learn more? <span class="decor">❧</span></h3>
+  <h3>Что читать дальше? <span class="decor">❧</span></h3>
 $markdown{[[
-For a guide and tutorial to Lapis, consult the [$reference manual]($root/reference.html).
+[Руководство и справочник по Lapis]($root/reference.html) :)
 
-The source of Lapis can be [found on Github](https://github.com/leafo/lapis)
-and issues can be reported on the [issues
-tracker](https://github.com/leafo/lapis/issues).
+Исходники Lapis хранятся на
+[Github](https://github.com/leafo/lapis).
+Об ошибках докладывайте
+[там же](https://github.com/leafo/lapis/issues).
 
-[MoonRocks](http://rocks.moonscript.org) is an open source application written
-in Lapis. It is a public Lua Rock repository and the [source can be found on
-GitHub](https://github.com/leafo/moonrocks-site).
+[MoonRocks](http://rocks.moonscript.org) - приложение с
+[открытыми исходниками](https://github.com/leafo/moonrocks-site),
+написанное на Lapis.
+Это приложение служит репозиторием модулей Lua, написанных
+сообществом.
 ]]}
 </div>
 
 <div class="box">
-  <h3>Anything else I should know? <span class="decor">❧</span></h3>
+  <h3>Что ещё я должен знать о Lapis? <span class="decor">❧</span></h3>
 $markdown{[[
-You can deploy a new Lapis application in a few minutes.
+Всего через несколько минут вы можете запустить
+своё первое приложение Lapis.
 
-If you don't mind using [Heroku](http://www.heroku.com) then it's just a matter
-of using the [Lua Buildpack](https://github.com/leafo/heroku-buildpack-lua) and
-installing the [OpenResty module](https://github.com/leafo/heroku-openresty).
+Если вы пользуетесь [Heroku](http://www.heroku.com),
+тогда надо просто запустить
+[Lua Buildpack](https://github.com/leafo/heroku-buildpack-lua) и
+установить модуль
+[OpenResty](https://github.com/leafo/heroku-openresty).
 
-You can use most existing Lua libraries with Lapis with no problems.
-Here are some libraries you might find useful:
+Большинство библиотек Lua совместимы с Lapis.
+Следующие библиотеки представляют интерес для веб-разработки:
 
-* [`web_sanitize`](https://github.com/leafo/web_sanitize) -- HTML sanitization
-* [`magick`](https://github.com/leafo/magick) -- ImageMagick bindings
-* [`cloud_storage`](https://github.com/leafo/cloud_storage) -- Support for Google Cloud Storage
-* [`lapis-console`](https://github.com/leafo/lapis-console) -- Interactive MoonScript console for Lapis that runs inside of your browser
-* [`lapis-exceptions`](https://github.com/leafo/lapis-exceptions) -- Exception tracking and reporting
+* [`web_sanitize`](https://github.com/leafo/web_sanitize) -- чистка HTML
+* [`magick`](https://github.com/leafo/magick) -- привязка ImageMagick
+* [`cloud_storage`](https://github.com/leafo/cloud_storage) --
+    связь с Google Cloud Storage
+* [`lapis-console`](https://github.com/leafo/lapis-console) --
+    интерактивная консоль MoonScript для Lapis в браузере
+* [`lapis-exceptions`](https://github.com/leafo/lapis-exceptions) --
+    отслеживание и журналирование ошибок для Lapis
 ]]}
 </div>
 
@@ -457,24 +479,25 @@ Here are some libraries you might find useful:
 <div class="box">
   <h3>About <span class="decor">❧</span></h3>
 $markdown{[[
-Lapis would not be possible without the following projects:
+Lapis обязан своим существованием следующим проектам:
 
 * [Lua](http://lua.org)
 * [LPeg](http://www.inf.puc-rio.br/~roberto/lpeg/)
 * [OpenResty](http://openresty.org)
 
-Lapis is licensed under the [MIT license](http://opensource.org/licenses/MIT).
+Lapis распространяется под
+[лицензией MIT](http://opensource.org/licenses/MIT).
 
-Lapis is written by [@moonscript](http://twitter.com/moonscript).
+Автор Lapis: [@moonscript](http://twitter.com/moonscript).
 ]]}
 </div>
 
 <div class="has_buttons bottom_buttons">
-  <a href="$root/reference.html" class="button">Reference Manual</a>
-  <a href="https://github.com/leafo/lapis" class="button">Source on GitHub</a>
+  <a href="$root/reference.html" class="button">Руководство</a>
+  <a href="https://github.com/leafo/lapis" class="button">Исходники на GitHub</a>
 </div>
 
 <div class="top_row">
-  <a href="#" class="top_link">&uarr; Top</a>
+  <a href="#" class="top_link">&uarr; К началу</a>
 </div>
 
