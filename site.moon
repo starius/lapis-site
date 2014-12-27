@@ -36,7 +36,7 @@ sitegen.create_site =>
 
   for file in *files
     target = "reference/#{file}"
-    add "lapis/docs/#{file}.md", :target, template: "reference"
+    add "lapis/docs_ru/#{file}.md", :target, template: "reference"
 
   add "reference.html", template: "reference"
 
