@@ -1,3 +1,4 @@
 [submodule "lapis"]
 	path = lapis
 	url = git@github.com:starius/lapis.git
+	branch = docs_ru
