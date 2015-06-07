@@ -1,6 +1,6 @@
 
 slugify = (str) ->
-  str.replace(/\s+/g, "-").replace(/[^\w_-]/g, "").toLowerCase()
+  url_slug(str).toLowerCase()
 
 build_index = ->
   nav_links = $(".nav_links:first")

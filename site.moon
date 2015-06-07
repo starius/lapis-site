@@ -66,4 +66,4 @@ sitegen.create_site =>
 
   add "index.html", template: "home"
   add "changelog.html", template: "home"
-
+  copy "url_slug.js"
