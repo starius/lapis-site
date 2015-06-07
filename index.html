@@ -1,9 +1,5 @@
 <div class="box">
-  <div class="new_banner">
-    <strong>10-е октября 2014 г.:</strong> выпущен Lapis v1.0.5, см. <a href="$root/changelog.html">changelog</a>
-  </div>
-
-  <h3>Что такое Lapis? <span class="decor">❧</span></h3>
+  <h1>Что такое Lapis?</h1>
 $markdown{[[
 Lapis - это фреймворк для веб-приложений на языках
 [MoonScript](http://moonscript.org) и [Lua](http://lua.org),
@@ -62,7 +58,7 @@ class extends lapis.Application
 <iframe style="display: none" width="800" height="450" class="video_embed" src="//www.youtube.com/embed/Eo67iTY1Yf8" frameborder="0" allowfullscreen></iframe>
 
 <div class="box">
-  <h3>Как работает Lapis? <span class="decor">❧</span></h3>
+  <h1>Как работает Lapis?</h1>
 $markdown{[[
 Код сайта исполняется непосредственно процессом Nginx,
 что приближает код к веб-серверу.
@@ -91,7 +87,7 @@ $markdown{[[
 
 
 <div class="box">
-  <h3>Что ещё есть в Lapis? <span class="decor">❧</span></h3>
+  <h1>Что ещё есть в Lapis?</h1>
 $markdown{[[
 
 В Lapis входит обработчик URL, [HTML-шаблоны][1],
@@ -178,6 +174,7 @@ class extends lapis.Application
 
 <div class="box">
 $markdown{[[
+## Модели
 Класс `Model` - мощный уровень абстракции от БД.
 От него наследуются модели данных:
 ]]}
@@ -195,7 +192,7 @@ $markdown{[[
 local Model = require("lapis.db.model").Model
 
 -- Модель для таблицы `users`
-local Users = Model.extend("users")
+local Users = Model:extend("users")
 
 -- загрузим несколько записей из БД
 local elderly_users = Users:select("where age > ? limit 5", 10)
@@ -260,6 +257,7 @@ user\delete!
 
 <div class="box">
 $markdown{[[
+## Шаблоны
 Пишите HTML-шаблоны на [etlua](https://github.com/leafo/etlua)
 или на Lua/MoonScript.
 
@@ -319,6 +317,7 @@ class Index extends Widget
 
 <div class="box">
 $markdown{[[
+## Пример
 Все эти инструменты позволяют нам быстро и чётко строить
 высоконагруженные системы с низким потреблением памяти.
 Ниже вы найдёте сложный пример, включающий формы, защиту от CSRF,
@@ -432,7 +431,7 @@ class extends lapis.Application
 </div>
 
 <div class="box">
-  <h3>Что читать дальше? <span class="decor">❧</span></h3>
+  <h1>Что читать дальше?</h1>
 $markdown{[[
 [Руководство и справочник по Lapis]($root/reference.html) :)
 
@@ -450,7 +449,7 @@ $markdown{[[
 </div>
 
 <div class="box">
-  <h3>Что ещё я должен знать о Lapis? <span class="decor">❧</span></h3>
+  <h1>Что ещё я должен знать о Lapis?</h1>
 $markdown{[[
 Всего через несколько минут вы можете запустить
 своё первое приложение Lapis.
@@ -477,7 +476,7 @@ $markdown{[[
 
 
 <div class="box">
-  <h3>About <span class="decor">❧</span></h3>
+  <h1>About</h1>
 $markdown{[[
 Lapis обязан своим существованием следующим проектам:
 

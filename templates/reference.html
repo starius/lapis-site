@@ -9,7 +9,7 @@
 <body>
   <div class="columns">
     <div class="nav_column">
-      <div class="sticky_inner">
+      <div class="scrolling_inner">
         <div class="indicator">&raquo;</div>
         <h1>
           <a href="$root">Lapis</a>
@@ -22,7 +22,6 @@
 
         <div class="nav_links">
           <h2>В этом разделе</h2>
-          <a href="#" class="top_link">&uarr; К началу раздела</a>
         </div>
 
         <div class="nav_links">
@@ -51,7 +50,9 @@ $markdown{[[
       </div>
     </div>
 
-    <div class="text_column">$body
+    <div class="nav_offset">
+      <div class="text_column">$body
+      </div>
     </div>
 
   </div>

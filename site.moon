@@ -2,8 +2,31 @@ require "sitegen"
 
 tools = require "sitegen.tools"
 
+PygmentsPlugin = require "sitegen.plugins.pygments"
+IndexerPlugin = require "sitegen.plugins.indexer"
+
+PygmentsPlugin.custom_highlighters.lua = (code_text, page) =>
+  _, err = loadstring(code_text)
+
+  if err
+    -- try again, make valid if it's just an expression
+    _, err2 = loadstring("_ = " .. code_text)
+    if err2
+      error "[#{page.source}] failed to compile: #{err}: #{code_text}"
+
+  @pre_tag @highlight("lua", code_text), "lua"
+
+PygmentsPlugin.custom_highlighters.moon = (code_text, page) =>
+  parse = require "moonscript.parse"
+  _, err =  parse.string code_text
+
+  if err
+    error "[#{page.source}] failed to compile: #{err}: #{code_text}"
+
+  @pre_tag @highlight("moon", code_text), "moon"
+
 sitegen.create_site =>
-  @current_version = "1.0.5"
+  @current_version = "1.2.0"
 
   scssphp = tools.system_command "sassc < %s > %s", "css"
   coffeescript = tools.system_command "coffee -c -s < %s > %s", "js"
@@ -20,6 +43,7 @@ sitegen.create_site =>
     "command_line"
     "configuration"
     "database"
+    "models"
     "etlua_templates"
     "exception_handling"
     "getting_started"

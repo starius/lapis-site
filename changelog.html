@@ -2,8 +2,95 @@ title: Changelog
 --
 
 <div class="box only_box changelog">
-  <h3>Changelog <span class="decor">❧</span></h3>
+  <h1>Changelog</h1>
 $markdown{[[
+
+v1.2.0 -- **May 14th 2015**
+
+**Breaking changes**
+
+There are a few changes that affect backwards compatibility:
+
+* The `default` Postgres backend, which utilizes `ngx_postgres`, has been entirely removed. Early users of Lapis are recommended to upgrade to `pgmoon`
+* The `has_many` relation now defines two methods: the `get_relation` method no longer returns a pager but all the associated rows. A new method, `get_relation_paginated` will return a pager
+
+#### Database
+
+* Add support for MySQL (Thanks [starius](https://github.com/leafo/lapis/pull/250))
+* Add `db.list` for automatically building SQL list syntax for `where x in ()` queries
+
+#### Models
+
+* `include_in` can now preload many associated objects when `many` option is set to true
+* A flipped `include_in` can now specify the `local_key` to use a different key than `id`
+* Add `polymorphic_belongs_to` relation
+* `has_many` now defines two methods, one for pagination and one for fetching all the rows
+* `has_many` relation now supports the `order` option
+* Fix all syntax errors in reference manual
+
+#### Misc
+
+* Enhance `singularize` function, can singularize words like *Categories* to *Category*
+* Main Lapis server and spec server can now be launched in different directories from the current
+* Fixed a bug when setting config values that would cause function blocks to override previous function blocks instead of merging
+
+v1.1.1 -- **April 25th 2015**
+
+#### Models
+
+* Add `singular_name` method to model classes, used when determining field name in relations and `inclue_in
+* Add `clause` parameter to `find_all`
+* `delete` method returns `true` if a row is actually removed, `false` otherwise
+* Relation getters will no longer error if foreign key has `nil` value
+* Fixed bug where ordered paginator with multiple keys could skip records if non-specific keys shared values
+
+#### `lapis.cache`
+
+* `cached` will only cache `GET` requests
+* `cached` updated to not interfere with `request` method
+
+#### Misc
+
+* `url_for` now takes a third argument, a table of query parameters
+* A flow can be passed to a flow in place of the `req` object.
+* New config field, `max_request_args`, controls OpenResty's maximum request argument truncation from `get_post_args` and `get_uri_args`.
+* Generated config includes pid directive to ensure compile time flags don't interfere
+* New `lapis.spec` module with `use_test_env` and `use_test_server` for busted
+* Fixed a bug where `respond_to` was returning multiple arguments and interfering with Lua match API
+
+v1.1.0 -- **February 3rd 2015**
+
+#### Models
+
+ * Added [support for relations to models](reference/models.html#describing-relationships)
+ * Added [`enum` function for models](reference/models.html#enum)
+ * Add `returning` option to `Model.create` to fetch initial values from database during create
+ * `db.raw` values passed to `Model.create` are loaded from database after create
+ * `db.raw` values passed to `Model.update` are loaded from database after update
+ * Fix bug where constraints were not working correctly for `Model.update`
+ * Many minor fixes to ordered paginator
+ * Migrations table automatically created on running migrations if it doesn't exist
+ * Migrations are now run outside of Nginx
+
+#### Widgets
+
+ * `content_for` data in widgets is prefixed to avoid conflict with user defined variables
+ * Boolean values for attributes in HTML builder will render value-less attribute
+ * Multiple `content_for` of same name will now append instead of overwrite
+
+#### Misc
+
+ * `Flow` can now expose instance variable assignments to request with `expose_assigns`
+ * Added new `lapis generate` command, add basic generators for model and spec
+ * `request` method in `lapis.spec.server` will now send merged GET parameters passed with those in URL
+
+v1.0.6 -- **October 27th 2014**
+
+  * Fix `http.request` when URL does not contain path
+  * `json_params` will read body before trying to parse it
+  * `util.autoload` can take multiple search prefixes
+  * `util.slugify` improved to avoid generating multiple `-`, will also conver `_` to `-` now
+
 v1.0.5 -- **October 10th 2014**
 
   * Add [refresh method to model instance](reference/database.html#models-refreshing-a-model-instance) for reloading properties
