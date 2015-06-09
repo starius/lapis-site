@@ -62,7 +62,7 @@ class extends lapis.Application
 $markdown{[[
 Код сайта исполняется непосредственно процессом Nginx,
 что приближает код к веб-серверу.
-В OpenResty Lua исполняется при помощи быстрого
+В OpenResty код Lua исполняется при помощи быстрого
 интерпретатора LuaJIT.
 Замеры производительности
 [показали](http://www.techempower.com/benchmarks/#section=data-r3),
@@ -70,8 +70,9 @@ $markdown{[[
 
 Цикл обработки событий Nginx используется для всех действий,
 включая внешние HTTP-запросы и запросы к БД.
-Благодаря сопрограммам Lua, асинхронные действия записываются
-в синхронном стиле, без лапша-кода из бесконечных обратных вызовов,
+Благодаря сопрограммам Lua, код асинхронных действий
+выглядит как простой синхронный код, без лапша-кода из
+бесконечных обратных вызовов,
 как происходит в большинстве асинхронных платформ.
 Работает быстрее, читается быстрее, пишется быстрее.
 
@@ -91,8 +92,8 @@ $markdown{[[
 $markdown{[[
 
 В Lapis входит обработчик URL, [HTML-шаблоны][1],
-[защита от CSRF][2], [сессии][3], [система моделей
-для работы с БД PostgreSQL][4],
+[защита от CSRF][2], [сессии][3], [система моделей][4]
+для работы с БД PostgreSQL и MySQL,
 [генерация таблиц БД][5], [миграции БД][6]
 и другие [полезные функции][7],
 необходимые для разработки веб-сайтов.
@@ -100,7 +101,7 @@ $markdown{[[
   [1]: $root/reference/html_generation.html
   [2]: $root/reference/utilities.html#csrf-protection
   [3]: $root/reference/actions.html#request-object-session
-  [4]: $root/reference/database.html#models
+  [4]: $root/reference/models.html
   [5]: $root/reference/database.html#database-schemas
   [6]: $root/reference/database.html#database-migrations
   [7]: $root/reference/utilities.html
@@ -175,8 +176,10 @@ class extends lapis.Application
 <div class="box">
 $markdown{[[
 ## Модели
-Класс `Model` - мощный уровень абстракции от БД.
-От него наследуются модели данных:
+
+Класс Модель служит для абстракции от БД.
+Чтобы определить свою модель, надо унаследовать свой класс
+от класса Модель.
 ]]}
 </div>
 
@@ -488,6 +491,8 @@ Lapis распространяется под
 [лицензией MIT](http://opensource.org/licenses/MIT).
 
 Автор Lapis: [@moonscript](http://twitter.com/moonscript).
+
+Перевод документации: [Борис Нагаев](https://github.com/starius).
 ]]}
 </div>
 
