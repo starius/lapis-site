@@ -15,7 +15,7 @@ $text_color: mix($bg, #222, 20%);
 $main_width: 900px;
 $nav_width: 300px;
 
-@import url(http://fonts.googleapis.com/css?family=Lato:400,700|Inconsolata);
+@import url(http://fonts.googleapis.com/css?family=Arial:400,700|Arial);
 
 @mixin transition($args...) {
     -webkit-transition: $args;
@@ -45,7 +45,7 @@ body {
     font-size: $font_size;
     color: $text_color;
     margin: 0;
-    font-family: Lato, sans-serif;
+    font-family: Arial, sans-serif;
 }
 
 .for_lua, .lang_lua {
@@ -67,7 +67,7 @@ body.show_lua {
 }
 
 code, pre {
-    font-family: Inconsolata, monospace;
+    font-family: Andale Mono, monospace;
 }
 
 a {
