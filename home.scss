@@ -13,7 +13,7 @@ $link_color: mix(#DA0057, $green, 50%);
 
 $text_color: #4C4E4C;
 
-@import url(http://fonts.googleapis.com/css?family=Arial:400,700|Arial);
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu+Mono:400,700&subset=latin,cyrillic);
 
 @function grid_width($size, $divisions: 8, $gutter: 20px, $width: $site_width) {
     @return floor($size * (($width - (($divisions - 1) * $gutter)) / $divisions) + ($size - 1) * $gutter);
@@ -77,7 +77,7 @@ body {
     color: $text_color;
     font-size: $font_size;
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: Ubuntu, sans-serif;
 }
 
 a {
@@ -144,7 +144,7 @@ a {
 }
 
 code, pre {
-    font-family: Andale Mono, monospace;
+    font-family: Ubuntu Mono, monospace;
 }
 
 .sub_header {
@@ -391,7 +391,7 @@ code, pre {
 
     .install_promp {
         &:before {
-            font-family: Andale Mono, monospace;
+            font-family: Ubuntu Mono, monospace;
             content: "$ ";
             color: #ff9898;
         }
