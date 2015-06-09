@@ -120,8 +120,7 @@ local app = lapis.Application()
 
 -- главная страница ("/")
 app:match("/", function(self)
-  local profile_url = self:url_for("profile",
-    {name = "leafo"})
+  local profile_url = self:url_for("profile", {name = "leafo"})
   -- генерация HTML
   return self:html(function()
     h2("Привет!")
@@ -134,8 +133,7 @@ end)
 app:match("profile", "/:name", function(self)
   return self:html(function()
     div({class = "profile"},
-      "Добро пожаловать на страничку " ..
-        self.params.name)
+      "Добро пожаловать на страничку " .. self.params.name)
   end)
 end)
 
@@ -166,8 +164,7 @@ class extends lapis.Application
   [profile: "/:name"]: =>
     @html ->
       div class: "profile", ->
-        text "Добро пожаловать на страничку ",
-          @params.name
+        text "Добро пожаловать на страничку ", @params.name
 ```
 ]]}
 
@@ -201,11 +198,9 @@ local Model = require("lapis.db.model").Model
 local Users = Model:extend("users")
 
 -- загрузим несколько записей из БД
-local elderly_users = Users:select(
-  "where age > ? limit 5", 10)
+local elderly_users = Users:select("where age > ? limit 5", 10)
 
--- доступ по первичному ключу
-local random_user = Users:find(1233)
+local random_user = Users:find(1233) -- доступ по первичному ключу
 
 local lee = Users:find({
   name = "Lee",
@@ -241,11 +236,9 @@ class Users extends Model
 -- загрузим несколько записей из БД
 elderly_users = Users\select "where age > ? limit 5", 10
 
--- доступ по первичному ключу
-random_user = Users\find 1233
+random_user = Users\find 1233 -- доступ по первичному ключу
 
-lee = Users\find name: "Lee",
-  email: "leemiller@example.com"
+lee = Users\find name: "Lee", email: "leemiller@example.com"
 
 -- создание и редактирование новой записи
 user = Users\create {
@@ -316,8 +309,7 @@ class Index extends Widget
 
   user_panel: =>
     return unless @current_user
-    div class: "user_panel", "Привет, " ..
-      @current_user.name
+    div class: "user_panel", "Привет, " .. @current_user.name
 ```
 ]]}
 
@@ -344,8 +336,7 @@ $markdown{[[
 ```lua
 local lapis = require "lapis"
 local Model = require("lapis.db.model").Model
-local application = require("lapis.application")
-local capture_errors = application.capture_errors
+local capture_errors = require("lapis.application").capture_errors
 local csrf = require "lapis.csrf"
 
 local Users = Model:extend("users")
@@ -357,8 +348,7 @@ app:before_filter(function(self)
 end)
 
 app:get("list_users", "/users", function(self)
-  -- запрашиваем список всех пользователей
-  self.users = Users:select()
+  self.users = Users:select() -- запрашиваем список всех пользователей
   return { render = true }
 end)
 
@@ -397,8 +387,7 @@ $markdown{[[
 ```moon
 lapis = require "lapis"
 import Model from require "lapis.db.model"
-import respond_to, capture_errors
-  from require "lapis.application"
+import respond_to, capture_errors from require "lapis.application"
 csrf = require "lapis.csrf"
 
 class Users extends Model
@@ -409,16 +398,14 @@ class extends lapis.Application
     @csrf_token = csrf.generate_token @
 
   [list_users: "/users"]: =>
-    -- запрашиваем список всех пользователей
-    users = Users\select!
+    users = Users\select! -- запрашиваем список всех пользователей
 
     -- генерация HTML
     @html ->
       ul ->
         for user in *users
           li ->
-            a href: @url_for("user", user.id),
-              user.name
+            a href: @url_for("user", user.id), user.name
 
   [user: "/profile/:id"]: =>
     user = Users\find id: @params.id
@@ -434,8 +421,7 @@ class extends lapis.Application
 
     GET: =>
       @html ->
-        user_url = @url_for("new_user")
-        form method: "POST", action: user_url, ->
+        form method: "POST", action: @url_for("new_user"), ->
           input type: "hidden",
             name: "csrf_token", value: @csrf_token
           input type: "text", name: "username"
